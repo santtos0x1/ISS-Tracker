@@ -1,7 +1,11 @@
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISS Tracker</title>
+
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.png' %}" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +29,13 @@
             font-family: 'Roboto Slab', serif;
         }
 
+        .footer-text {
+            transition: transform 0.3s ease;
+        }
+        .footer-text:hover {
+            text-shadow: 0 0 5px #ffffff;
+        }
+
         .section {
             height: 100vh;
             display: flex;
@@ -41,9 +52,10 @@
 
         .map-section {
             margin: 0;
-            height: 500px;
+            max-height: 700px;
+            height: 70vh;
             width: 90%;
-            border: 5px solid white;
+            border: 3px solid white;
             border-radius: 10px;
         }
 
@@ -54,6 +66,7 @@
 
         .github-link:hover {
             transform: scale(1.15);
+            text-shadow: 0 0 5px #ffffff;
         }
 
         .header-title {
@@ -62,6 +75,7 @@
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             letter-spacing: 0.5rem;
+            text-shadow: 0 0 4px #ffffff;
         }
 
         .header-arrow {
@@ -73,8 +87,9 @@
 
         .header-arrow:hover {
             transform: translateY(10px);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease;
             color: #e2e2e2;
+            text-shadow: 0 0 5px #ffffff;
         }
 
         #content {

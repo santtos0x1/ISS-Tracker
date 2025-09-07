@@ -20,11 +20,20 @@
                 const lat = parseFloat(data.iss_position.latitude);
                 const lon = parseFloat(data.iss_position.longitude);
                 marker.setLatLng([lat, lon]);
+                
                 map.setView([lat, lon], map.getZoom());
+                map.panTo([lat, lon], animate=true);
             } catch (err) {
                 console.error('Error to search the ISS position:', err);
             }
         }
+
+        $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent('http://api.open-notify.org/astros.json'), function(data) {
+            const parsed = JSON.parse(data.contents);
+            $('#spacepeeps').text(parsed.number);
+        });
+
+
         updateISS();
         setInterval(updateISS, 5000);
     </script>

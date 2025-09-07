@@ -19,7 +19,20 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
+        :root {
+            --color-background-section: #102d67;
+            --color-background-top: #08133d;
+            --color-scrollbar-track: #1e1e5a;
+            --color-scrollbar-thumb: #9a9a9a21;
+            --color-text-footer: #ffffff;
+            --color-border-map: #ffffff;
+            --color-text-general: #333;
+            --color-hover-effect: #ffffff;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -27,13 +40,31 @@
         body {
             margin: 0;
             font-family: 'Roboto Slab', serif;
+            color: var(--color-text-general);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-scrollbar-track);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-scrollbar-thumb);
+            border-radius: 3px;
+        }
+
+        .info-container {
+            margin: 20px;
+            text-align: center;
+            color: var(--color-text-general);
         }
 
         .footer-text {
             transition: transform 0.3s ease;
         }
         .footer-text:hover {
-            text-shadow: 0 0 5px #ffffff;
+            text-shadow: 0 0 5px var(--color-hover-effect);
         }
 
         .section {
@@ -41,12 +72,35 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: var(--color-text-footer);
             text-align: center;
+            background-color: var(--color-background-section);
+        }
+
+        .section-footer {
+            min-height: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--color-text-footer);
+            background-color: var(--color-background-top);
+            font-size: clamp(0.8rem, 1vw, 1rem);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 600px) {
+            .section-footer {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
         }
 
         #top {
-            background-color: #050524;
+            background-color: var(--color-background-top);
             flex-direction: column;
         }
 
@@ -55,7 +109,7 @@
             max-height: 700px;
             height: 70vh;
             width: 90%;
-            border: 3px solid white;
+            border: 3px solid var(--color-border-map);
             border-radius: 10px;
         }
 
@@ -63,10 +117,9 @@
             transition: transform 0.3s ease;
             text-decoration: none;
         }
-
         .github-link:hover {
-            transform: scale(1.15);
-            text-shadow: 0 0 5px #ffffff;
+            transform: scale(1.10);
+            text-shadow: 0 0 5px var(--color-hover-effect);
         }
 
         .header-title {
@@ -75,7 +128,6 @@
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             letter-spacing: 0.5rem;
-            text-shadow: 0 0 4px #ffffff;
         }
 
         .header-arrow {
@@ -84,17 +136,17 @@
             transition: transform 0.3s ease;
             padding: 2rem;
         }
-
         .header-arrow:hover {
             transform: translateY(10px);
             transition: transform 0.3s ease;
-            color: #e2e2e2;
-            text-shadow: 0 0 5px #ffffff;
+            color: var(--color-hover-effect);
+            text-shadow: 0 0 5px var(--color-hover-effect);
         }
 
         #content {
-            background-color: #0a1b3d;
+            background-color: var(--color-background-section);
             font-size: 2rem;
         }
+
     </style>
 </head>

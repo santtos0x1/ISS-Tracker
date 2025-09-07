@@ -1,0 +1,31 @@
+{% load static %}
+<section id="content" class="section animate__animated">
+    
+    <div id="map" class="map-section"></div>
+    <script>
+        const map = L.map('map').setView([0, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        const issIcon = L.icon({
+            iconUrl: "{% static 'iss/images/iss.png' %}",
+            iconSize: [50, 50],
+            iconAnchor: [25, 25]
+        });
+        const marker = L.marker([0, 0], { icon: issIcon }).addTo(map);
+        async function updateISS() {
+            try {
+                const response = await fetch('http://api.open-notify.org/iss-now.json');
+                const data = await response.json();
+                const lat = parseFloat(data.iss_position.latitude);
+                const lon = parseFloat(data.iss_position.longitude);
+                marker.setLatLng([lat, lon]);
+                map.setView([lat, lon], map.getZoom());
+            } catch (err) {
+                console.error('Error to searche the ISS position:', err);
+            }
+        }
+        updateISS();
+        setInterval(updateISS, 5000);
+    </script>
+</section>

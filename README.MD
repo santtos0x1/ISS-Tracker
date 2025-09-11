@@ -2,7 +2,7 @@
 
 A real-time International Space Station (ISS) tracker built with Django, displaying the current location and information about the ISS using interactive maps.
 
-[]
+![ISS Tracker](./src/github/img/image.png)
 
 ## 🌟 Features
 

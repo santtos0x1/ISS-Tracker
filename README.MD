@@ -32,7 +32,7 @@ A real-time International Space Station (ISS) tracker built with Django, display
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/santtos0x1/iss-tracker.git
+   git clone https://github.com/santtos0x1/ISS-Tracker.git
    cd iss-tracker
    ```
 

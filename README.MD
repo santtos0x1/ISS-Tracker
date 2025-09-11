@@ -2,7 +2,7 @@
 
 A real-time International Space Station (ISS) tracker built with Django, displaying the current location and information about the ISS using interactive maps.
 
-![ISS Tracker Preview](https://via.placeholder.com/800x400/102d67/fff?text=ISS+Tracker+Preview)
+[]
 
 ## 🌟 Features
 
@@ -32,7 +32,7 @@ A real-time International Space Station (ISS) tracker built with Django, display
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/santtos0x1/iss-tracker.git
+   git clone https://github.com/santtos0x1/ISS-Tracker.git
    cd iss-tracker
    ```
 

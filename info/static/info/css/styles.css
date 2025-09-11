@@ -1,0 +1,17 @@
+:root {
+    --color-background-section: #102d67;
+    --color-background-top: #08133d;
+    --color-scrollbar-track: #1e1e5a;
+    --color-scrollbar-thumb: #9a9a9a21;
+    --color-text-footer: #fff;
+    --color-border-map: #fff;
+    --color-text-general: #333;
+    --color-hover-effect: #fff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto Slab', serif;
+    color: var(--color-text-general);
+    background-color: var(--color-background-section);
+}

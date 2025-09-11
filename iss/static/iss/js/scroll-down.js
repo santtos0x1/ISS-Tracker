@@ -1,0 +1,5 @@
+function scrollDown() {
+  const content = document.getElementById('content');
+  content.scrollIntoView({ behavior: 'smooth' });
+  content.classList.add('animate__fadeInUp');
+}

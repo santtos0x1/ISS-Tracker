@@ -1,6 +1,7 @@
 from django.urls import path
-from iss.views import home
+from . import views
 
 urlpatterns = [
-    path('', home)
+    path('', views.home),
+    path('iss/orbit/', views.iss_orbit, name='iss_orbit')
 ]

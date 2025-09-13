@@ -1,18 +1,18 @@
-<header id="top" class="section">
-  <div class="header-container">
+{% extends "global/header.html" %}
+
+{% block content %}
     <a href="https://github.com/santtos0x1/ISS-Tracker/tree/master" target="_blank" class="github-link">
         <i class="fa-brands fa-github"></i>
     </a>
 
     <a href="{% url 'info' %}" class="plus-link">
-      <i class="fa-solid fa-plus"></i>
+        <i class="fa-solid fa-plus"></i>
     </a>
-    
+
     <hr>
     <span class="header-title">International Space Station Tracker</span><br>
     <hr>
     <span class="header-title" id="header-subtitle">Real-time tracking of the ISS orbiting Earth</span>
     <hr>
     <i class="fa-solid fa-arrow-down header-arrow" onclick="scrollDown()"></i>
-  </div>
-</header>
+{% endblock content %}

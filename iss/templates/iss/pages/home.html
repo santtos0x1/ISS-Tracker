@@ -1,12 +1,12 @@
 {% load static %}
-{% include "iss/partials/head.html" %}
+{% include "iss/partials/head-meta-content.html" %}
 
 <body>
-    {% include "iss/partials/header.html" %}
+    {% include "iss/partials/iss-header-content.html" %}
 
-    {% include "iss/partials/map.html" %}
+    {% include "iss/partials/map-content.html" %}
 
-    {% include "iss/partials/footer.html" %}
+    {% include "global/footer.html" %}
 
-    <script src="{% static 'js/scroll-down.js' %}"></script>
+    <script src="{% static 'iss/js/scroll-down.js' %}"></script>
 </body>

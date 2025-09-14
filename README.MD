@@ -3,6 +3,7 @@
 A real-time International Space Station (ISS) tracker built with Django, displaying the current location and information about the ISS using interactive maps.
 
 ![ISS Tracker](./src/doc/github/img/image.png)
+![ISS Info](./src/doc/github/img/image_2.png)
 
 ---
 
@@ -74,6 +75,10 @@ A real-time International Space Station (ISS) tracker built with Django, display
 This project uses the [Open Notify API](http://api.open-notify.org/) to fetch real-time ISS data:
 
 - **ISS Current Location**: `http://api.open-notify.org/iss-now.json`
+
+---
+![ISS Map](./src/doc/github/img/image_3.png)
+---
 
 ## 🎨 Features in Detail
 

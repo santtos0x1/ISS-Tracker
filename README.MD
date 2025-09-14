@@ -116,15 +116,6 @@ The application is fully responsive and works on:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📋 TODO
-
-- [ ] Add ISS pass predictions for user location
-- [ ] Implement astronaut information display
-- [ ] Add notification system for ISS overhead passes
-- [ ] Create historical trajectory visualization
-- [ ] Add multiple language support
-- [ ] Implement dark/light theme toggle
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -138,6 +129,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-⭐ Don't forget to star this repository if you found it helpful!
+⭐ Don't forget to star this repository if you found it interesting!
 
-🛰️ Happy tracking! The ISS is currently traveling at ~17,500 mph around Earth!
+🛰️ Happy tracking! The ISS is currently traveling at ~27,500 km/h around Earth!

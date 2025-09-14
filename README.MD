@@ -120,13 +120,6 @@ The application is fully responsive and works on:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **NASA** - For making ISS data publicly available
-- **Open Notify** - For providing the ISS tracking API
-- **Django Community** - For the amazing framework
-- **Contributors** - Thank you for your contributions!
-
 ---
 
 ⭐ Don't forget to star this repository if you found it interesting!

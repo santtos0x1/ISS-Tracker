@@ -15,7 +15,7 @@ def get_info_api():
     iss_lon = f"{data['longitude']}"
     iss_velocity = f"{data['velocity']:.2f}"
     iss_altitude = f"{data['altitude']:.2f}"
-    iss_visibility = f"{data['visibility']}"
+    iss_visibility = f"{data['visibility']}" 
     info = [iss_velocity, iss_altitude, iss_visibility, iss_lat, iss_lon]
     
     return info

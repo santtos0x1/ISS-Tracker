@@ -1,0 +1,48 @@
+<main class="main-content">
+    <section id="iss-data" class="section">
+        <a href="{% url 'home' %}" class="minus-link">
+            <i class="fa-solid fa-minus"></i>
+        </a>
+        <div class="info-content-container">
+            <h1 class="section-title">ISS Informations</h1>
+            <hr>
+            <div class="info-list">
+                <p class="info-paragraph">
+                    <span>
+                        <strong>Velocity:</strong> {{ velo }} Km/h
+                    </span>
+                </p>
+
+                <p class="info-paragraph">
+                    <span>
+                        <strong>Altitude:</strong> {{ alti }} Km
+                    </span>
+                </p>
+
+                <p class="info-paragraph">
+                    <span>
+                        <strong>Visibility:</strong> {{ visi }} 
+                        {% if visi == 'daylight' %}
+                            ☀️
+                        {% else %}
+                            🌙
+                        {% endif %}
+                    </span>
+                </p>
+
+                <p class="info-paragraph">
+                    <span>
+                        <strong>Longitude:</strong> {{ lon }}
+                    </span>
+                </p>
+
+                <p class="info-paragraph">
+                    <span>
+                        <strong>Latitude:</strong> {{ lat }}
+                    </span>
+                </p>
+                
+            </div>
+        </div>
+    </section>
+</main>

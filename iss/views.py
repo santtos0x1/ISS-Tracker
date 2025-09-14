@@ -20,7 +20,6 @@ def get_tle():
     global cached_tle, cached_time
     now = datetime.datetime.utcnow()
     
-    # Se não tem cache ou passou mais de 2h, atualiza
     if not cached_tle or (now - cached_time) > CACHE_DURATION:
         tle_url = "https://celestrak.org/NORAD/elements/stations.txt"
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}

@@ -10,7 +10,7 @@ A real-time International Space Station (ISS) tracker built with Django, display
 - **Interactive Map**: Visual representation of the ISS location on a world map
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - **Modern UI**: Clean, space-themed interface with smooth animations
-- **Live Data**: Fetches real-time data from Open Notify API
+- **Live Data**: Fetches real-time data from Open Notify API and WTIA REST API
 
 ## 🚀 Tech Stack
 

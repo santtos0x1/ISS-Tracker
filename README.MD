@@ -16,7 +16,7 @@ A real-time International Space Station (ISS) tracker built with Django, display
 
 - **Backend**: Django 4.x
 - **Frontend**: HTML5, CSS3, JavaScript
-- **API**: [Open Notify API](http://api.open-notify.org/)
+- **API**: [Open Notify API](http://api.open-notify.org/) | [WTIA REST API](https://wheretheiss.at/w/developer)
 - **Styling**: Custom CSS with CSS Variables
 - **Maps**: Interactive mapping integration
 - **Fonts**: Google Fonts (Roboto Slab, Playfair Display)

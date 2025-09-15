@@ -11,26 +11,19 @@ function splitPathAtDateLine(path) {
             let [prevLat, prevLon] = path[i-1];
             if (prevLon > 180) prevLon -= 360;
             if (prevLon < -180) prevLon += 360;
+
             let lonDiff = Math.abs(lon - prevLon);
 
             if (lonDiff > 180) {
-                currentSegment.push([prevLat, prevLon]);
-
                 if (currentSegment.length > 1) {
                     segments.push([...currentSegment]);
                 }
-
-                currentSegment = [[lat, lon]];
-
-            } else {
-                currentSegment.push([lat, lon]);
+                currentSegment = [];
             }
-
-        } else {
-            currentSegment.push([lat, lon]);
         }
+        currentSegment.push([lat, lon]);
     }
-    
+
     if (currentSegment.length > 1) {
         segments.push(currentSegment);
     }
@@ -38,21 +31,26 @@ function splitPathAtDateLine(path) {
     return segments;
 }
 
-const map = L.map('map').setView([0, 0], 2);
-const map_url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'; 
+const map = L.map('map', {
+    center: [0, 0],
+    zoom: 3,
+    scrollWheelZoom: false
+});
 
-L.tileLayer(map_url, {
-    attribution: 'Tiles © Esri'
+L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.opentopomap.org/">OpenTopoMap</a> contributors'
 }).addTo(map);
 
 const issIcon = L.icon({
-    iconUrl: '/static/iss/images/iss-map-icon.png',
-    iconSize: [35, 35],
+    iconUrl: '/static/iss/images/iss-png.png',
+    iconSize: [50, 50],
     iconAnchor: [25, 25]
 });
 
 let marker = null;
+let footprintCircle = null;
 let animationTimeout = null;
+const visibilityRadius = 648000;
 
 async function loadISSPath() {
     try {
@@ -65,57 +63,64 @@ async function loadISSPath() {
                 map.removeLayer(layer);
             }
         });
-        
-        pathSegments.forEach((segment, index) => {
+
+        pathSegments.forEach(segment => {
             if (segment.length > 1) {
                 const polyline = L.polyline(segment, { 
-                    color: "yellow", 
+                    color: "red", 
                     weight: 3,
                     opacity: 0.8 
                 }).addTo(map);
-
                 polyline.bringToBack();
             }
         });
 
-        const normalizedPath = data.path.map(([lat, lon]) => {
-            if (lon > 180) lon -= 360;
-            if (lon < -180) lon += 360;
+        const currentPos = pathSegments[0][0];
+        map.setView(currentPos, 3);
 
-            return [lat, lon];
-        });
-
-        if (normalizedPath.length > 0) {
-            map.setView(normalizedPath[0], 3);
-
-            if (!marker) {
-                marker = L.marker(normalizedPath[0], { icon: issIcon }).addTo(map);
-                console.log("Marcador criado na posição:", normalizedPath[0]);
-            } else {
-                marker.setLatLng(normalizedPath[0]);
-                console.log("Marcador movido para:", normalizedPath[0]);
-            }
-
-            if (animationTimeout) {
-                clearTimeout(animationTimeout);
-            }
-            
-            setTimeout(() => {
-                animateISS(normalizedPath, 0);
-            }, 500);
+        if (!marker) {
+            marker = L.marker(currentPos, { icon: issIcon }).addTo(map);
+        } else {
+            marker.setLatLng(currentPos);
         }
+
+        if (!footprintCircle) {
+            footprintCircle = L.circle(currentPos, {
+                color: 'rgba(255, 0, 0, 0.5)',
+                fillColor: 'rgba(255, 0, 0, 0.33)',
+                fillOpacity: 0.2,
+                radius: visibilityRadius
+            }).addTo(map);
+        } else {
+            footprintCircle.setLatLng(currentPos);
+        }
+
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+        }
+
+        const flatPath = pathSegments.flat();
+
+        setTimeout(() => {
+            animateISS(flatPath, 0);
+        }, 500);
+
     } catch (err) {
         console.error("ERROR: failed to load the ISS position:", err);
     }
 }
 
 function animateISS(path, currentIndex = 0) {
+    if (currentIndex >= path.length) return;
+
     const [lat, lon] = path[currentIndex];
 
     if (marker && typeof marker.setLatLng === 'function') {
         marker.setLatLng([lat, lon]);
-    } else {
-        console.error("The marker does not have setLatLng:", marker);
+    }
+
+    if (footprintCircle && typeof footprintCircle.setLatLng === 'function') {
+        footprintCircle.setLatLng([lat, lon]);
     }
 
     animationTimeout = setTimeout(() => {

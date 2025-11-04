@@ -13,42 +13,54 @@ except locale.Error:
 cached_tle = None
 cached_time = None
 CACHE_DURATION = datetime.timedelta(minutes=30)
+ISS_URL = 'https://api.wheretheiss.at/v1/satellites/25544'
 
 
 def get_info_api():
-    ISS_URL = 'https://api.wheretheiss.at/v1/satellites/25544'
     req = requests.get(ISS_URL)
     data = req.json()
-    iss_lat = f"{data['latitude']}"
-    iss_lon = f"{data['longitude']}"
-    iss_velocity = f"{data['velocity']:.2f}"
-    iss_altitude = f"{data['altitude']:.2f}"
-    iss_visibility = f"{data['visibility']}"
-    info = [iss_velocity, iss_altitude, iss_visibility, iss_lat, iss_lon]
 
-    return info
+    lat = data['latitude']
+    lon = data['longitude']
 
+    velocity = float(data['velocity'])
+    velocity_formatted = locale.format_string("%.2f", velocity, grouping=True)
 
+    altitude = float(data['altitude'])
+    altitude_formatted = locale.format_string("%.2f", altitude, grouping=True)
 
+    visibility = data['visibility']
+
+    return {
+        'lat': str(lat),
+        'lon': str(lon),
+        'velocity': velocity_formatted,
+        'altitude': altitude_formatted,
+        'visibility': visibility
+    }
 
 
 def get_tle():
     global cached_tle, cached_time
+
     now = datetime.datetime.utcnow()
 
     if not cached_tle or (now - cached_time) > CACHE_DURATION:
         tle_url = "https://celestrak.org/NORAD/elements/stations.txt"
-        headers = {"User-Agent": "Mozilla/5.0"}
-        resp = requests.get(tle_url, headers=headers)
+        resp = requests.get(tle_url, headers={
+            "User-Agent": "Mozilla/5.0"
+        })
         tle_data = resp.text.splitlines()
 
-        # search for ISS (more robust than fixed indices)
         for i, line in enumerate(tle_data):
             if "ISS" in line.upper() or "ZARYA" in line.upper():
                 line1 = tle_data[i+1].strip()
                 line2 = tle_data[i+2].strip()
+
+                #Cache
                 cached_tle = (line1, line2)
                 cached_time = now
+
                 break
         else:
             # fallback to first lines if not found
@@ -62,16 +74,19 @@ def get_tle():
 def gmst_from_jd(jd, fr):
     """
     Compute Greenwich Mean Sidereal Time in radians.
-    Based on Vallado (2007) algorithm (seconds -> radians).
+    Based on Vallado algorithm (seconds -> radians).
     """
     # full Julian date (days)
     jd_full = jd + fr
     T = (jd_full - 2451545.0) / 36525.0
+
     # GMST in seconds
     gmst_sec = 67310.54841 + (876600.0 * 3600 + 8640184.812866) * T \
                + 0.093104 * (T**2) - 6.2e-6 * (T**3)
-    # normalize to [0,86400)
+
+    # normalize to [0,86400]
     gmst_sec = gmst_sec % 86400.0
+
     # convert seconds to radians: 360 deg = 86400 sec -> 1 sec = 360/86400 deg
     gmst_deg = gmst_sec * (360.0 / 86400.0)
     gmst_rad = math.radians(gmst_deg)
@@ -80,7 +95,7 @@ def gmst_from_jd(jd, fr):
 
 
 def teme_to_ecef(r_teme, jd, fr):
-    """Rotate TEME vector to ECEF using GMST (approx.)."""
+    # Rotate TEME vector to ECEF using GMST (approx.).
     gmst = gmst_from_jd(jd, fr)
     x, y, z = r_teme
 
@@ -94,7 +109,6 @@ def teme_to_ecef(r_teme, jd, fr):
 
 def ecef_to_latlon(x, y, z):
     """Convert ECEF (km) to geodetic lat/lon (approx, ignoring ellipsoid height)."""
-
     # Simple spherical conversion (adequate for visualization). For highest precision, use WGS84 ellipsoid formulas.
     r = math.sqrt(x*x + y*y + z*z)
     lat = math.degrees(math.asin(z / r))
@@ -124,8 +138,10 @@ def iss_orbit_calc():
         if e == 0:
             # r is in km in TEME frame
             x_teme, y_teme, z_teme = r
+
             # convert TEME -> ECEF
             x_ecef, y_ecef, z_ecef = teme_to_ecef((x_teme, y_teme, z_teme), jd, fr)
+
             # convert ECEF -> lat/lon
             lat, lon = ecef_to_latlon(x_ecef, y_ecef, z_ecef)
             latlons.append([lat, lon])

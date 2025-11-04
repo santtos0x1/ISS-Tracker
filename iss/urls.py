@@ -5,6 +5,6 @@ app_name = 'iss'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('iss/orbit/', views.iss_orbit, name='orbit'),
-    path('iss/data/', views.info, name='data')
+    path('data/', views.info, name='data'),
+    path('orbit/data/json/', views.iss_orbit, name='orbit'),
 ]
